@@ -58,4 +58,18 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
+// 获取单个文章详情
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const post = await Post.findByPk(id);
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+        res.json(post);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
